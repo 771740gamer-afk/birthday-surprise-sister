@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Birthday Surprise 🎉</title>
 
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Niconne&family=Pacifico&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
@@ -13,10 +12,17 @@ body {
   margin:0;
   font-family:'Roboto', sans-serif;
   overflow:hidden;
-  background: linear-gradient(135deg,#ffe4ee,#fad0c4 80%);
+  background: linear-gradient(270deg,#ff9ec4,#ffc3a0,#ffdde1,#fbc2eb);
+  background-size: 600% 600%;
+  animation: gradientMove 12s ease infinite;
 }
 
-/* General sections */
+@keyframes gradientMove {
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
 section {
   width:100vw;
   height:100vh;
@@ -26,321 +32,210 @@ section {
   flex-direction:column;
   position:absolute;
   top:0; left:0;
-  transition:opacity .9s ease, transform .9s ease;
+  transition: all .8s ease;
 }
-.hidden { display:none; }
 
-/* Card styles for page1 & page2 */
+.hidden {
+  opacity:0;
+  pointer-events:none;
+  transform:scale(0.9);
+}
+
+section:not(.hidden) {
+  opacity:1;
+  transform:scale(1);
+}
+
 .greet-card {
-  background:rgba(255,255,255,0.94);
+  background:rgba(255,255,255,0.95);
   border-radius:22px;
   box-shadow:0 4px 48px #ffd6f3b2;
-  padding:36px 28px 42px 28px;
+  padding:36px 28px;
   text-align:center;
-  position:relative;
 }
+
 .greet-heading {
   font-family:'Pacifico', cursive;
   font-size:2rem;
   color:#ff6db8;
   margin-bottom:12px;
-  letter-spacing:1.4px;
-  text-shadow:0 0 6px #ffb8ef,0 0 18px #ffe1fb,0 0 22px #ff74c0;
-  animation:glowText 1.6s ease-in-out infinite alternate;
+  animation:glowText 1.6s infinite alternate;
 }
+
 @keyframes glowText {
-  from { text-shadow:0 0 8px #ffb8ef,0 0 14px #ffe1fb,0 0 22px #ff74c0;}
-  to { text-shadow:0 0 18px #ffd6f3,0 0 30px #ff74c0,0 0 38px #ffa7d3;}
+  from { text-shadow:0 0 8px #ffb8ef;}
+  to { text-shadow:0 0 20px #ff74c0;}
 }
+
 .sub-heading {
   color:#e070a3;
-  font-size:1.08rem;
-  font-weight:600;
-  font-style:italic;
   margin-bottom:6px;
 }
-.faded {
-  color:#b768a0;
-  font-size:1rem;
-  opacity:0.9;
-}
+
 .pink-btn, .next-btn {
-  background:linear-gradient(94deg,#ff8fab,#ff63a8 90%);
+  background:linear-gradient(94deg,#ff8fab,#ff63a8);
   color:#fff;
   padding:12px 32px;
   border:none;
-  font-size:1.1rem;
   border-radius:28px;
   cursor:pointer;
-  font-weight:500;
   margin-top:16px;
-  box-shadow:0 0 22px #fcc1eb,0 0 48px #ffb8ef;
-}
-.pink-btn { animation:smoothSwayBtn 2.7s ease-in-out infinite alternate; }
-@keyframes smoothSwayBtn {
-  0%{transform:translateY(0) scale(1);}
-  50%{transform:translateY(-7px) scale(1.04);}
-  100%{transform:translateY(0) scale(1);}
+  transition:0.3s;
 }
 
-/* Floating hearts */
+.pink-btn:hover, .next-btn:hover {
+  transform: scale(1.08);
+}
+
+.pink-btn:active, .next-btn:active {
+  transform: scale(0.95);
+}
+
+/* Hearts */
 @keyframes floatHearts {
-  0% {transform:translateY(0) scale(1);}
-  100% {transform:translateY(-100vh) scale(1.5); opacity:0;}
+  to {transform:translateY(-100vh); opacity:0;}
 }
 .heart {
   position:absolute;
   bottom:-10px;
-  color:rgba(255,100,160,0.8);
-  animation:floatHearts 6s linear forwards;
-  font-size:20px;
+  animation:floatHearts 5s linear forwards;
 }
 
-/* Page3 letter card */
+/* Letter */
 .letter-card {
   background:#fff;
   border-radius:20px;
-  padding:30px 25px;
-  box-shadow:0 8px 40px rgba(0,0,0,0.15);
-  max-width:420px;
+  padding:25px;
+  max-width:400px;
   width:90%;
-  max-height:70vh;
-  overflow-y:auto;
   text-align:center;
-  position:relative;
-  z-index:1;
-  opacity:0;
-  transform: translateY(30px);
-  animation:fadeUpIn 1.2s ease forwards;
+  animation:fadeUp 1s forwards;
 }
 
-/* Fade hint for scroll */
-.letter-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 30px;
-  background: linear-gradient(to top, rgba(255,255,255,0.9), transparent);
-  pointer-events: none;
+@keyframes fadeUp {
+  from {opacity:0; transform:translateY(30px);}
+  to {opacity:1; transform:translateY(0);}
 }
 
-@keyframes fadeUpIn {
-  to {
-    opacity:1;
-    transform: translateY(0);
-  }
-}
-.letter-card h3 {
-  font-family:'Pacifico',cursive;
-  color:#a64ca6;
-  margin-bottom:18px;
-  font-size:1.9rem;
-  text-shadow: 0 0 6px #d68fd6;
-}
-.letter-card p, #letter {
-  font-family: 'Niconne', cursive;
-  font-size:1.35rem;
-  line-height:1.8;
+#letter {
+  font-family:'Niconne', cursive;
+  font-size:1.3rem;
   color:#7b4a7b;
-  text-shadow: 0 0 4px #d9a6d9a3;
-  white-space: pre-wrap;
-  opacity:0;
-  transition: opacity 0.8s ease-in-out;
-}
-#letter.visible {
-  opacity:1;
-}
-
-/* Scroll hint arrow */
-.scroll-hint {
-  display:inline-block;
-  animation: bounce 1.2s infinite;
-  color:#e070a3;
-  font-size:0.9rem;
-  margin-top:6px;
-}
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(6px); }
 }
 
 /* Confetti */
 .confetti {
   position:absolute;
-  width:10px; height:10px;
-  background-color: #ff63a8;
-  opacity:0.8;
-  pointer-events:none;
-  z-index:0;
+  width:8px;
+  height:8px;
   border-radius:50%;
   animation:fall linear forwards;
 }
 @keyframes fall {
-  0% {transform:translateY(0) rotate(0deg);}
-  100% {transform:translateY(100vh) rotate(720deg);}
-}
-
-/* Sparkles */
-.sparkle {
-  position:absolute;
-  width:4px; height:4px;
-  background:radial-gradient(circle,#fff,#ffd6f3);
-  border-radius:50%;
-  opacity:0.8;
-  pointer-events:none;
-  z-index:0;
-  animation:sparkleAnim 1.2s linear infinite;
-}
-@keyframes sparkleAnim {
-  0% {transform:scale(0.2) translateY(0); opacity:1;}
-  50% {transform:scale(1) translateY(-20px); opacity:0.6;}
-  100% {transform:scale(0.2) translateY(0); opacity:0;}
+  to {transform:translateY(100vh);}
 }
 </style>
 </head>
+
 <body>
 
-<!-- Page 1 -->
 <section id="page1">
   <div class="greet-card">
-    <div class="greet-heading">Happy Birthday Dear Sister</div>
-    <div class="sub-heading">To the most amazing woman in my life</div>
-    <div class="faded">Every moment with you is a gift, and today we celebrate the greatest gift of all – You! 💖</div>
-    <button class="pink-btn" onclick="nextPage(2)">Begin Your Surprise</button>
+    <h2 class="greet-heading">Happy Birthday Sister 💖</h2>
+    <p class="sub-heading">Special Surprise For You</p>
+    <button class="pink-btn" onclick="nextPage(2)">Start</button>
   </div>
 </section>
 
-<!-- Page 2 -->
 <section id="page2" class="hidden">
   <div class="greet-card">
-    <div class="greet-heading">A Special Greeting Card 💌</div>
-    <div class="sub-heading">Floating Hearts Just for You</div>
-    <div class="faded">Hope this makes your day extra magical! ✨</div>
+    <h2 class="greet-heading">Ready? 💌</h2>
     <button class="next-btn" onclick="nextPage(3)">Next</button>
   </div>
 </section>
 
-<!-- Page 3 -->
 <section id="page3" class="hidden">
-  <div class="letter-card" id="letterCard">
-    <h3>Your Special Message 💖</h3>
+  <div class="letter-card">
+    <h3>💖 Message 💖</h3>
     <div id="letter"></div>
-    <div class="scroll-hint">⬇ Scroll for more 💌</div>
   </div>
 </section>
 
 <script>
 let heartIntervals = {};
 
-// Page switch
 function nextPage(num) {
   document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-  const page = document.querySelector('#page' + num);
+  const page = document.getElementById('page' + num);
   page.classList.remove('hidden');
 
-  if(num === 2 || num === 3){
-    if(!heartIntervals[num]) {
-      heartIntervals[num] = setInterval(() => {
-        createHeart(page);
-      }, 500);
-    }
+  if(!heartIntervals[num]) {
+    heartIntervals[num] = setInterval(()=>createHeart(page), 500);
   }
 
-  if(num === 3) {
+  if(num === 3){
     revealLetter();
     startConfetti();
-    startSparkles();
   }
 }
 
-// Floating hearts
 function createHeart(page) {
   const heart = document.createElement('div');
   heart.className = 'heart';
-  heart.textContent = '💗';
-  heart.style.left = Math.random() * 100 + 'vw';
-  heart.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
-  heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
+  heart.textContent = ['💗','💖','💕'][Math.floor(Math.random()*3)];
+  heart.style.left = Math.random()*100+'vw';
   page.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
+  setTimeout(()=>heart.remove(),5000);
 }
 
-// Typewriter effect
-function typeWriter(text, element, speed = 35) {
-  let i = 0;
-  element.style.opacity = '1';
-  element.classList.add('visible');
-  element.innerHTML = '';
-  function typing() {
-    if(i < text.length){
-      element.innerHTML += text.charAt(i).replace(/\n/g, '<br>');
+function typeWriter(text, element, speed=35){
+  let i=0;
+  element.innerHTML='';
+
+  function typing(){
+    if(i<text.length){
+      element.innerHTML =
+        text.substring(0,i).replace(/\n/g,'<br>') + '|';
       i++;
-      setTimeout(typing, speed);
+      setTimeout(typing,speed);
+    } else {
+      element.innerHTML = text.replace(/\n/g,'<br>');
     }
   }
   typing();
 }
 
-// Reveal letter
-function revealLetter() {
-  const text = `Meri pyari behan 💖
+function revealLetter(){
+  const text = `💖🎉 Happy Birthday meri choti behan 🎂💖  
 
-Aaj ka din sirf tumhare liye hai…  
-Tumhari hansi, tumhari masoomiyat, aur tumhara pyara andaaz har din ko special banata hai. 🌸✨
+Tu meri life ka sabse pyara hissa hai 😊💫  
+Teri smile meri sabse badi khushi hai 😄✨  
 
-Hume pata hai ki hum thode door ho gaye hain, lekin aaj main bas ye yaad dilana chahta hoon –  
-Tum mere liye hamesha sabse special rahogi. 💕
+Tu hamesha aise hi hansti rehna 😘💖  
+Aur apni cuteness se sabka dil jeetti rehna 🥰💕  
 
-Humare saath bitaye har pal ki yaadein mere dil mein hamesha rahengi…  
+Bhagwan kare tera har sapna pura ho 🌸🌟  
+Aur tu life me bohot aage badhe 🚀✨  
 
-Aaj tumhare liye bohot saari khushiyan, mithai, gifts aur saari masti bhari ho! 🎂🎉  
-Tum hamesha khush raho, apne sapno ko jiyo, aur har din apne andaaz se duniya ko roshan karo. ✨🌷
+Aaj ka din full enjoy kar 🎂🎉🍫  
+Kyuki aaj sirf tera din hai 🎁💃💫  
 
-Aur yaad rakho, chahe hum thode door ho ya paas…  
-Mera pyaar, mera saath aur meri yaadein hamesha tumhare saath hain. 💗💫
+Hamesha khush rehna meri choti behan 💖🥺✨`;
 
-💖🎀 Tumhare liye mera pyaar hamesha yahan hai 💗✨
-
-🎉 Happy Birthday Dear Sister 💖`;
-
-  typeWriter(text, document.getElementById('letter'), 35);
+  typeWriter(text, document.getElementById('letter'));
 }
 
-// Confetti effect
-function startConfetti() {
-  const page3 = document.getElementById('page3');
-  if(startConfetti.interval) return;
-  startConfetti.interval = setInterval(() => {
-    const confetti = document.createElement('div');
-    confetti.className = 'confetti';
-    confetti.style.left = Math.random() * 100 + 'vw';
-    confetti.style.backgroundColor = `hsl(${Math.random() * 360},100%,70%)`;
-    confetti.style.width = (Math.random() * 6 + 4) + 'px';
-    confetti.style.height = (Math.random() * 6 + 4) + 'px';
-    confetti.style.animationDuration = (Math.random() * 2 + 3) + 's';
-    page3.appendChild(confetti);
-    setTimeout(() => confetti.remove(), 5000);
-  }, 150);
-}
-
-// Sparkles effect
-function startSparkles() {
-  const page3 = document.getElementById('page3');
-  if(startSparkles.interval) return;
-  startSparkles.interval = setInterval(() => {
-    const sparkle = document.createElement('div');
-    sparkle.className = 'sparkle';
-    sparkle.style.left = Math.random() * 100 + 'vw';
-    sparkle.style.top = Math.random() * 80 + 'vh';
-    sparkle.style.width = (Math.random() * 4 + 2) + 'px';
-    sparkle.style.height = (Math.random() * 4 + 2) + 'px';
-    sparkle.style.animationDuration = (Math.random() * 1 + 1) + 's';
-    page3.appendChild(sparkle);
-    setTimeout(() => sparkle.remove(), 1200);
-  }, 100);
+function startConfetti(){
+  setInterval(()=>{
+    const c = document.createElement('div');
+    c.className='confetti';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=`hsl(${Math.random()*360},100%,70%)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  },150);
 }
 </script>
+
 </body>
 </html>
